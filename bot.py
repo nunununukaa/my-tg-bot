@@ -9,7 +9,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 # ==================== НАСТРОЙКИ ====================
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8446878675:AAG00SXde7Xk8EfQA7A_CYjF_cCLattXCvI")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 ADMIN_ID = 6511829371  # Ваш Telegram ID
 KINOPOISK_API_KEY = "ВАШ_API_KEY_КИНОПОИСКА"
 
