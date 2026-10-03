@@ -186,9 +186,31 @@ async def add_kp_id(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(f"✅ Фильм «{kp['title']}» успешно добавлен!")
 
+from aiohttp import web
+
+async def handle(request):
+    return web.Response(text="Bot is running!")
+
+async def web_server():
+    app = web.Application()
+    app.router.add_get("/", handle)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    port = int(os.environ.get("PORT", 8080))
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
+
 if __name__ == "__main__":
     init_db()
     logging.basicConfig(level=logging.INFO)
-    from aiogram import executor
-    executor.start_polling(dp, skip_updates=True)
+    
+    loop = asyncio.get_event_loop()
+    loop.create_task(web_server())
+    loop.create_task(dp.start_polling())
+    
+    try:
+        loop.run_forever()
+    finally:
+        loop.close()
+
 
